@@ -14,7 +14,7 @@
 #include "DLL.h"
 
 namespace ns {
-	typedef uint16_t Origin;
+	using Origin = uint16_t;
 
 	enum OriginType : Origin {
 		COMMAND = 1, ///< If a command is calling another command.
@@ -63,10 +63,10 @@ namespace ns {
 #endif
 	};
 
-	typedef std::unordered_map<std::string, std::string> ConsoleVariables;
-	typedef std::vector<ConsoleVariables::pointer> LoopVariablesRunning;
-	typedef std::vector<ConsoleVariables::pointer> ToggleVariablesRunning; ///< This is unecessary to be a pointer but I like the idea of using only 8 bytes instead of the same bytes as the var name.
-	typedef std::vector<Command*> ToggleCommandsRunning;
+	using ConsoleVariables = std::unordered_map<std::string, std::string>;
+	using LoopVariablesRunning = std::vector<ConsoleVariables::pointer>;
+	using ToggleVariablesRunning = std::vector<ConsoleVariables::pointer>; ///< This is unecessary to be a pointer but I like the idea of using only 8 bytes instead of the same bytes as the var name.
+	using ToggleCommandsRunning = std::vector<Command*>;
 
 	/**
 	 * @brief General context that can be used with multiple command contexts.

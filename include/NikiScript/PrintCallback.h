@@ -13,7 +13,7 @@ namespace ns {
 		ERROR, ///< anything that went wrong and can not continue
 	};
 
-	typedef void(*PrintCallback)(void* pData, PrintLevel level, const char* message);
+	using PrintCallback = void(*)(void* pData, PrintLevel level, const char* message);
 
 	extern NS_API PrintCallback printCallback;
 	extern NS_API void* pPrintCallbackData;

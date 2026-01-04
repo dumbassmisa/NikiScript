@@ -12,8 +12,8 @@ namespace ns {
 	struct Context;
 	struct CommandContext;
 
-	typedef std::string(*GetProgramVariableValue)(CommandContext* pCtx, ProgramVariable* pVar);
-	typedef void(*SetProgramVariableValue)(CommandContext* pCtx, ProgramVariable* pVar, const std::string& str);
+	using GetProgramVariableValue = std::string(*)(CommandContext* pCtx, ProgramVariable* pVar);
+	using SetProgramVariableValue = void(*)(CommandContext* pCtx, ProgramVariable* pVar, const std::string& str);
 
 	struct NS_API ProgramVariable {
 		void* pValue = nullptr;
@@ -26,7 +26,7 @@ namespace ns {
 		ProgramVariable(void* pValue, const std::string& description, const GetProgramVariableValue& get, const SetProgramVariableValue& set);
 	};
 
-	typedef std::unordered_map<std::string, ProgramVariable> ProgramVariables;
+	using ProgramVariables = std::unordered_map<std::string, ProgramVariable>;
 
 	NS_API std::string getString(CommandContext*, ProgramVariable* pVar);
 	NS_API void setString(CommandContext*, ProgramVariable* pVar, const std::string& str);

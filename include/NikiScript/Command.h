@@ -9,7 +9,7 @@
 namespace ns {
 	struct CommandContext;
 
-	typedef void(*CommandCallback)(CommandContext* pCtx, void* pData);
+	using CommandCallback = void(*)(CommandContext* pCtx, void* pData);
 
 	struct NS_API Command {
 		std::string name{};

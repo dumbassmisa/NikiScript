@@ -6,7 +6,7 @@
 #include "DLL.h"
 
 namespace ns {
-	typedef uint8_t TokenFlag;
+	using TokenFlag = uint8_t;
 	enum TokenType : TokenFlag {
 		NONE = 0,
 		IDENTIFIER = 1, ///< If it's the first token after an EOS, END or NONE. Should be either a variable or command
