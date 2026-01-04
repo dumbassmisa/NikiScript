@@ -1,0 +1,1 @@
+- Use Pimpl technique since STL and DLLs together are a pain in the ass
