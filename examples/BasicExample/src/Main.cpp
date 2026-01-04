@@ -47,7 +47,7 @@ static void crazy_command(ns::CommandContext* pCtx, void*) {
 		return;
 	}
 
-	isCrazy = pCtx->args.getSigned<uint32_t>(0) > 0;
+	isCrazy = pCtx->args.getSigned<int32_t>(0) > 0;
 }
 
 
