@@ -118,8 +118,7 @@ int main(int, char**) {
 	ns::setPrintCallback(nullptr, nikiScriptPrintCallback);
 
 	ns::Context ctx;
-	char _cfgDirectory[] = "data/cfg/";
-	ctx.cfgDirectory = _cfgDirectory;
+	ctx.cfgDirectory = "data/cfg/";
 	init(ctx);
 
 	std::string input;
