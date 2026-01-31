@@ -7,7 +7,7 @@
 
 #include "Command.h"
 #include "CommandHandler.h"
-#include "PrintCallback.h"
+#include "Print.h"
 #include "ProgramVariable.h"
 #include "Lexer.h"
 
@@ -29,6 +29,9 @@ namespace ns {
 
 	struct NS_API Arguments {
 		std::vector<std::string> arguments{};
+#ifdef NS_CS_API
+		size_t count() const;
+#endif
 
 		std::string& getString(size_t index);
 
@@ -36,18 +39,21 @@ namespace ns {
 		double getDouble(size_t index);
 		long double getLongDouble(size_t index);
 
-		long getLong(size_t index);
-		long long getLongLong(size_t index);
-		unsigned long long getUnsignedLongLong(size_t index);
-
 		/**
 		 * @brief Uses std::stoul so any number below that can be used.
 		 * @tparam T Number type.
 		 */
 		template<typename T>
 		T getUnsigned(size_t index) {
-			return static_cast<T>(std::stoul(arguments[index]));
+			return static_cast<T>(std::stoull(arguments[index]));
 		}
+
+#ifdef NS_CS_API
+		uint8_t getByte(size_t index);
+		uint16_t getUInt16(size_t index);
+		uint32_t getUInt32(size_t index);
+		uint64_t getUInt64(size_t index);
+#endif
 
 		/**
 		 * @brief Uses std::stoi so any number below that can be used.
@@ -58,8 +64,11 @@ namespace ns {
 			return static_cast<T>(std::stoi(arguments[index]));
 		}
 
-#ifdef NS_ARGUMENTS_EXTRA
-		NS_ARGUMENTS_EXTRA
+#ifdef NS_CS_API
+		int8_t getSByte(size_t index);
+		int16_t getInt16(size_t index);
+		int32_t getInt32(size_t index);
+		int64_t getInt64(size_t index);
 #endif
 	};
 
@@ -82,7 +91,7 @@ namespace ns {
 		ToggleCommandsRunning toggleCommandsRunning{};
 
 		uint16_t maxConsoleVariablesRecursiveDepth = 255; ///< How many console variables can be called inside each other
-		char* cfgDirectory = nullptr; ///< Expects a null terminated char array. Heap allocated is possible but this code doesn't free by itself
+		const char* cfgDirectory = nullptr; ///< Expects a null terminated char array. Heap allocated is possible but this code doesn't free by itself
 	};
 
 	/**

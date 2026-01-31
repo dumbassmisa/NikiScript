@@ -1,11 +1,46 @@
 #include "Context.h"
 
-std::string& ns::Arguments::getString(size_t index) {
-	return arguments[index];
+#ifdef NS_CS_API
+size_t ns::Arguments::count() const {
+	return arguments.size();
 }
 
-unsigned long long ns::Arguments::getUnsignedLongLong(size_t index) {
-	return std::stoull(arguments[index]);
+uint8_t ns::Arguments::getByte(size_t index) {
+	return getUnsigned<uint8_t>(index);
+}
+
+uint16_t ns::Arguments::getUIntU16(size_t index) {
+	return getUnsigned<uint16_t>(index);
+}
+
+uint32_t ns::Arguments::getUInt32(size_t index) {
+	return getUnsigned<uint32_t>(index);
+}
+
+uint64_t ns::Arguments::getUInt64(size_t index) {
+	return getUnsigned<uint64_t>(index);
+}
+
+
+int8_t ns::Arguments::getSByte(size_t index) {
+	return getUnsigned<int8_t>(index);
+}
+
+int16_t ns::Arguments::getInt16(size_t index) {
+	return getUnsigned<int16_t>(index);
+}
+
+int32_t ns::Arguments::getInt32(size_t index) {
+	return getUnsigned<int32_t>(index);
+}
+
+int64_t ns::Arguments::getInt64(size_t index) {
+	return getUnsigned<int64_t>(index);
+}
+#endif
+
+std::string& ns::Arguments::getString(size_t index) {
+	return arguments[index];
 }
 
 
@@ -19,14 +54,6 @@ double ns::Arguments::getDouble(size_t index) {
 
 long double ns::Arguments::getLongDouble(size_t index) {
 	return std::stold(arguments[index]);
-}
-
-long ns::Arguments::getLong(size_t index) {
-	return std::stol(arguments[index]);
-}
-
-long long ns::Arguments::getLongLong(size_t index) {
-	return std::stoll(arguments[index]);
 }
 
 
