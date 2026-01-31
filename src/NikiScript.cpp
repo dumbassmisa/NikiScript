@@ -218,7 +218,7 @@ void ns::toggle(CommandContext* pCtx, const std::string& varName, const std::str
 
 	} else if (ns::Command *pCommand = pCtx->pCtx->commands.get(varName)) { // Command
 		void* pOriginalPrintCallbackData = pPrintCallbackData;
-		PrintCallback originalPrintCallback = printCallback;
+		PrintCallbackFn originalPrintCallback = printCallback;
 
 		std::string varValue;
 		setPrintCallback(&varValue, printAppendToStringEchoOnly);
@@ -266,6 +266,6 @@ void ns::registerCommands(Context* pCtx) {
 	nsRegisterCommand(pCtx, "incrementvar", 3,4, incrementvar_command, "do value + delta, when value > max: value = min", "v[variable]", "variable to modify value", "d[min]", "minimum value possible", "d[max]", "maximum possible value", "d[delta?]", "to increase value with -> value + delta");
 }
 
-void ns::registerVariable(Context* pCtx, const std::string& name, const std::string& description, void* pVar, const GetProgramVariableValue& get, const SetProgramVariableValue& set) {
+void ns::registerVariable(Context* pCtx, const std::string& name, const std::string& description, void* pVar, const GetProgramVariableValueFn& get, const SetProgramVariableValueFn& set) {
 	pCtx->programVariables[name] = ProgramVariable(pVar, description, get, set);
 }

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "PrintCallback.h"
+#include "Print.h"
 
 void ns::clearStatementData(CommandContext* pCtx) {
 	pCtx->pCommand = nullptr;

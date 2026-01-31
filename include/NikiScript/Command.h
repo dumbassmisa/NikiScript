@@ -9,7 +9,7 @@
 namespace ns {
 	struct CommandContext;
 
-	using CommandCallback = void(*)(CommandContext* pCtx, void* pData);
+	using CommandCallbackFn = void(*)(CommandContext* pCtx, void* pData);
 
 	struct NS_API Command {
 		std::string name{};
@@ -22,7 +22,7 @@ namespace ns {
 		std::vector<std::string> argsDescriptions{};
 
 		uint8_t minArgs = 0, maxArgs = 0;
-		CommandCallback callback = nullptr;
+		CommandCallbackFn callback = nullptr;
 
 		void* pData = nullptr; ///< pData is useful for functions that don't have a defined body and actually depends on a data that it's not possible to know without a hacky way which is worse than just using pData
 
@@ -37,7 +37,7 @@ namespace ns {
 		 * @param argsDescriptions Arguments description. Should have 2 strings for each argument, where the first one is argument name and the second is argument description.
 		 * @see ns::registerCommands for code example
 		 */
-		Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs, CommandCallback callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions);
+		Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs, CommandCallbackFn callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions);
 	
 		/**
 		 * @brief splitted by space

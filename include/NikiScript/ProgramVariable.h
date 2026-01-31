@@ -12,18 +12,18 @@ namespace ns {
 	struct Context;
 	struct CommandContext;
 
-	using GetProgramVariableValue = std::string(*)(CommandContext* pCtx, ProgramVariable* pVar);
-	using SetProgramVariableValue = void(*)(CommandContext* pCtx, ProgramVariable* pVar, const std::string& str);
+	using GetProgramVariableValueFn = std::string(*)(CommandContext* pCtx, ProgramVariable* pVar);
+	using SetProgramVariableValueFn = void(*)(CommandContext* pCtx, ProgramVariable* pVar, const std::string& str);
 
 	struct NS_API ProgramVariable {
 		void* pValue = nullptr;
 		std::string description;
 
-		GetProgramVariableValue get = nullptr;
-		SetProgramVariableValue set = nullptr;
+		GetProgramVariableValueFn get = nullptr;
+		SetProgramVariableValueFn set = nullptr;
 
 		ProgramVariable();
-		ProgramVariable(void* pValue, const std::string& description, const GetProgramVariableValue& get, const SetProgramVariableValue& set);
+		ProgramVariable(void* pValue, const std::string& description, const GetProgramVariableValueFn& get, const SetProgramVariableValueFn& set);
 	};
 
 	using ProgramVariables = std::unordered_map<std::string, ProgramVariable>;

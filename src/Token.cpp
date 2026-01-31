@@ -1,6 +1,6 @@
 #include "Token.h"
 
-#include "PrintCallback.h"
+#include "Print.h"
 #include "Context.h"
 #include "Parser.h"
 
@@ -24,7 +24,7 @@ void ns::insertReferencesInToken(CommandContext* pCtx, Token& token) {
 
 		} else {
 			void* pOriginalPrintCallbackData = pPrintCallbackData;
-			PrintCallback originalPrintCallback = printCallback;
+			PrintCallbackFn originalPrintCallback = printCallback;
 
 			std::string printOutput;
 			setPrintCallback(&printOutput, printAppendToStringEchoOnly);

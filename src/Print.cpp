@@ -1,9 +1,9 @@
-#include "PrintCallback.h"
+#include "Print.h"
 
-ns::PrintCallback ns::printCallback = nullptr;
+ns::PrintCallbackFn ns::printCallback = nullptr;
 void* ns::pPrintCallbackData = nullptr;
 
-void ns::setPrintCallback(void* pData, PrintCallback callback) {
+void ns::setPrintCallback(void* pData, PrintCallbackFn callback) {
 	printCallback = callback;
 	pPrintCallbackData = pData;
 }

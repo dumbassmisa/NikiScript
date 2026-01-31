@@ -5,7 +5,7 @@
 
 ns::ProgramVariable::ProgramVariable() {}
 
-ns::ProgramVariable::ProgramVariable(void* pValue, const std::string& description, const GetProgramVariableValue& get, const SetProgramVariableValue& set)
+ns::ProgramVariable::ProgramVariable(void* pValue, const std::string& description, const GetProgramVariableValueFn& get, const SetProgramVariableValueFn& set)
  : pValue(pValue), description(description), get(get), set(set) {}
 
 std::string ns::getString(CommandContext*, ProgramVariable* pVar) {

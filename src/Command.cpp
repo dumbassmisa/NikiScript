@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "PrintCallback.h"
+#include "Print.h"
 
 #ifdef NDEBUG
 #define NS_COMMAND_ASSERT(name, expression)
@@ -15,7 +15,7 @@
 ns::Command::Command() {}
 
 ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
-	CommandCallback callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions)
+	CommandCallbackFn callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions)
 	: name(name), description(description), argsDescriptions(argsDescriptions), minArgs(minArgs), maxArgs(maxArgs), callback(callback), pData(pData) {
 #ifndef NDEBUG
 	NS_COMMAND_ASSERT(name, !name.empty())

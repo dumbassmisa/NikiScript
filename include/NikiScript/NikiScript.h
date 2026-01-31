@@ -103,5 +103,5 @@ namespace ns {
 	 * @param get
 	 * @param set
 	 */
-	NS_API void registerVariable(Context* pCtx, const std::string& name, const std::string& description, void* pVar, const GetProgramVariableValue& get, const SetProgramVariableValue& set);
+	NS_API void registerVariable(Context* pCtx, const std::string& name, const std::string& description, void* pVar, const GetProgramVariableValueFn& get, const SetProgramVariableValueFn& set);
 }

@@ -11,6 +11,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 option(BUILD_SHARED "Whether make it shared or static" ON)
+option(BUILD_CS_API "Whether generate C# API or not" OFF)
 
 if (NOT MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
@@ -35,6 +36,14 @@ if(BUILD_SHARED)
 	endif()
 else()
     add_library(NikiScript STATIC ${SOURCES})
+endif()
+
+if (BUILD_CS_API)
+	if (NOT BUILD_SHARED)
+		message(FATAL_ERROR "CS_API requires BUILD_SHARED")
+	endif()
+
+	target_compile_definitions(NikiScript PUBLIC NS_CS_API=1)
 endif()
 
 set_target_properties(NikiScript PROPERTIES VERSION ${PROJECT_VERSION})

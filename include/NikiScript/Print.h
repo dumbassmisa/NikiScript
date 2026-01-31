@@ -13,12 +13,15 @@ namespace ns {
 		ERROR, ///< anything that went wrong and can not continue
 	};
 
-	using PrintCallback = void(*)(void* pData, PrintLevel level, const char* message);
+	using PrintCallbackFn = void(*)(void* pData, PrintLevel level, const char* message);
 
-	extern NS_API PrintCallback printCallback;
+#ifdef NS_CS_BINDINGS
+#else
+	extern NS_API PrintCallbackFn printCallback;
 	extern NS_API void* pPrintCallbackData;
+#endif
 
-	NS_API void setPrintCallback(void* pData, PrintCallback callback);
+	NS_API void setPrintCallback(void* pData, PrintCallbackFn callback);
 	NS_API void print(PrintLevel level, const char* str);
 	NS_API void printUnknownCommand(const char* command);
 
