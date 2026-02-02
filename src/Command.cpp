@@ -17,7 +17,7 @@ NS_CS_VECTOR_IMPLEMENTATION(ArgsDescriptions, argsDescriptions, std::string&, co
 ns::Command::Command() {}
 
 ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
-	CommandCallbackFn callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions)
+ CommandCallbackFn callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions)
 	: name(name), description(description), argsDescriptions(argsDescriptions), minArgs(minArgs), maxArgs(maxArgs), callback(callback), pData(pData) {
 #ifndef NDEBUG
 	NS_COMMAND_ASSERT(name, !name.empty())
@@ -42,6 +42,19 @@ ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
 
 	NS_COMMAND_ASSERT(name, callback != nullptr);
 #endif
+}
+
+ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
+ CommandCallbackFn callback, void* pData, const std::string& description,
+ const char** pArgsDescriptions, uint16_t argsDescriptionsCount) {
+	std::vector<std::string> argsDescriptions;
+	argsDescriptions.reserve(argsDescriptionsCount);
+
+	for (uint16_t i = 0; i < argsDescriptionsCount; ++i) {
+		argsDescriptions.push_back(pArgsDescriptions[i]);
+	}
+
+	*this = Command(name, minArgs, maxArgs, callback, pData, description, argsDescriptions);
 }
 
 std::string ns::Command::getArgumentsNames() {

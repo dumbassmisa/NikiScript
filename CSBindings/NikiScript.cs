@@ -34,6 +34,9 @@ namespace NikiScript
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "??0Command@ns@@QEAA@XZ", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern __IntPtr ctor(__IntPtr __instance);
 
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "??0Command@ns@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@EEP6AXPEAUCommandContext@1@PEAX@Z20PEAPEBDG@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ctor(__IntPtr __instance, __IntPtr name, byte minArgs, byte maxArgs, __IntPtr callback, __IntPtr pData, __IntPtr description, sbyte** argsDescriptions, ushort argsDescriptionsCount);
+
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "??0Command@ns@@QEAA@AEBU01@@Z", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern __IntPtr cctor(__IntPtr __instance, __IntPtr _0);
 
@@ -43,8 +46,26 @@ namespace NikiScript
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?printAsDataTree@Command@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern void PrintAsDataTree(__IntPtr __instance);
 
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsGet@Command@ns@@QEAAAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ArgsDescriptionsGet(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsPop@Command@ns@@QEAAX_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ArgsDescriptionsPop(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsPush@Command@ns@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ArgsDescriptionsPush(__IntPtr __instance, __IntPtr value);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsClear@Command@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ArgsDescriptionsClear(__IntPtr __instance);
+
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?getArgumentsNames@Command@ns@@QEAA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern void GetArgumentsNames(__IntPtr __instance, __IntPtr @return);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsData@Command@ns@@QEAAPEAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ArgsDescriptionsData(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ArgsDescriptionsCount@Command@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ArgsDescriptionsCount(__IntPtr __instance);
         }
 
         public __IntPtr __Instance { get; protected set; }
@@ -118,6 +139,23 @@ namespace NikiScript
             __Internal.ctor(__Instance);
         }
 
+        public Command(string name, byte minArgs, byte maxArgs, global::NikiScript.CommandCallbackFn callback, __IntPtr pData, string description, sbyte** argsDescriptions, ushort argsDescriptionsCount)
+        {
+            __Instance = Marshal.AllocHGlobal(sizeof(global::NikiScript.Command.__Internal));
+            __ownsNativeInstance = true;
+            __RecordNativeToManagedMapping(__Instance, this);
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, name);
+            var __arg0 = __basicString0.__Instance;
+            var __arg3 = callback == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback);
+            var __basicString5 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString5, description);
+            var __arg5 = __basicString5.__Instance;
+            __Internal.ctor(__Instance, __arg0, minArgs, maxArgs, __arg3, pData, __arg5, argsDescriptions, argsDescriptionsCount);
+            __basicString0.Dispose();
+            __basicString5.Dispose();
+        }
+
         public Command(global::NikiScript.Command _0)
         {
             __Instance = Marshal.AllocHGlobal(sizeof(global::NikiScript.Command.__Internal));
@@ -153,6 +191,32 @@ namespace NikiScript
         public void PrintAsDataTree()
         {
             __Internal.PrintAsDataTree(__Instance);
+        }
+
+        public string ArgsDescriptionsGet(ulong index)
+        {
+            var ___ret = __Internal.ArgsDescriptionsGet(__Instance, index);
+            var __basicStringRet0 = global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>.__CreateInstance(___ret);
+            return global::Std.BasicStringExtensions.Data(__basicStringRet0);
+        }
+
+        public void ArgsDescriptionsPop(ulong index)
+        {
+            __Internal.ArgsDescriptionsPop(__Instance, index);
+        }
+
+        public void ArgsDescriptionsPush(string value)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, value);
+            var __arg0 = __basicString0.__Instance;
+            __Internal.ArgsDescriptionsPush(__Instance, __arg0);
+            __basicString0.Dispose();
+        }
+
+        public void ArgsDescriptionsClear()
+        {
+            __Internal.ArgsDescriptionsClear(__Instance);
         }
 
         public string Name
@@ -248,6 +312,24 @@ namespace NikiScript
                 var __retString0 = global::Std.BasicStringExtensions.Data(__basicStringRet0);
                 __basicStringRet0.Dispose();
                 return __retString0;
+            }
+        }
+
+        public __IntPtr ArgsDescriptionsData
+        {
+            get
+            {
+                var ___ret = __Internal.ArgsDescriptionsData(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong ArgsDescriptionsCount
+        {
+            get
+            {
+                var ___ret = __Internal.ArgsDescriptionsCount(__Instance);
+                return ___ret;
             }
         }
     }
@@ -692,6 +774,86 @@ namespace NikiScript
 
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "??1Context@ns@@QEAA@XZ", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern void dtor(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ConsoleVariablesContains@Context@ns@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            internal static extern bool ConsoleVariablesContains(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ConsoleVariablesGetValue@Context@ns@@QEAAAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV34@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ConsoleVariablesGetValue(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ConsoleVariablesErase@Context@ns@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ConsoleVariablesErase(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ConsoleVariablesClear@Context@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ConsoleVariablesClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ProgramVariablesContains@Context@ns@@QEAA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            [return: MarshalAs(UnmanagedType.I1)]
+            internal static extern bool ProgramVariablesContains(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ProgramVariablesGetValue@Context@ns@@QEAAAEAUProgramVariable@2@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ProgramVariablesGetValue(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ProgramVariablesErase@Context@ns@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ProgramVariablesErase(__IntPtr __instance, __IntPtr key);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ProgramVariablesClear@Context@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ProgramVariablesClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?LoopVariablesRunningGet@Context@ns@@QEAAAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr LoopVariablesRunningGet(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?LoopVariablesRunningPop@Context@ns@@QEAAX_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void LoopVariablesRunningPop(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?LoopVariablesRunningClear@Context@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void LoopVariablesRunningClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleVariablesRunningGet@Context@ns@@QEAAAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ToggleVariablesRunningGet(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleVariablesRunningPop@Context@ns@@QEAAX_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ToggleVariablesRunningPop(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleVariablesRunningClear@Context@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ToggleVariablesRunningClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningGet@Context@ns@@QEAAPEAUCommand@2@_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ToggleCommandsRunningGet(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningPop@Context@ns@@QEAAX_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ToggleCommandsRunningPop(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningPush@Context@ns@@QEAAXPEAUCommand@2@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ToggleCommandsRunningPush(__IntPtr __instance, __IntPtr value);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningClear@Context@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ToggleCommandsRunningClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ConsoleVariablesCount@Context@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ConsoleVariablesCount(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ProgramVariablesCount@Context@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ProgramVariablesCount(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?LoopVariablesRunningData@Context@ns@@QEAAPEAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr LoopVariablesRunningData(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?LoopVariablesRunningCount@Context@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong LoopVariablesRunningCount(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleVariablesRunningData@Context@ns@@QEAAPEAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ToggleVariablesRunningData(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleVariablesRunningCount@Context@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ToggleVariablesRunningCount(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningData@Context@ns@@QEAAPEAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ToggleCommandsRunningData(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ToggleCommandsRunningCount@Context@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ToggleCommandsRunningCount(__IntPtr __instance);
         }
 
         public __IntPtr __Instance { get; protected set; }
@@ -799,6 +961,133 @@ namespace NikiScript
             __Instance = IntPtr.Zero;
         }
 
+        public bool ConsoleVariablesContains(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            var ___ret = __Internal.ConsoleVariablesContains(__Instance, __arg0);
+            __basicString0.Dispose();
+            return ___ret;
+        }
+
+        public string ConsoleVariablesGetValue(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            var ___ret = __Internal.ConsoleVariablesGetValue(__Instance, __arg0);
+            __basicString0.Dispose();
+            var __basicStringRet0 = global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>.__CreateInstance(___ret);
+            return global::Std.BasicStringExtensions.Data(__basicStringRet0);
+        }
+
+        public void ConsoleVariablesErase(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            __Internal.ConsoleVariablesErase(__Instance, __arg0);
+            __basicString0.Dispose();
+        }
+
+        public void ConsoleVariablesClear()
+        {
+            __Internal.ConsoleVariablesClear(__Instance);
+        }
+
+        public bool ProgramVariablesContains(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            var ___ret = __Internal.ProgramVariablesContains(__Instance, __arg0);
+            __basicString0.Dispose();
+            return ___ret;
+        }
+
+        public global::NikiScript.ProgramVariable ProgramVariablesGetValue(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            var ___ret = __Internal.ProgramVariablesGetValue(__Instance, __arg0);
+            __basicString0.Dispose();
+            var __result0 = global::NikiScript.ProgramVariable.__GetOrCreateInstance(___ret, false);
+            return __result0;
+        }
+
+        public void ProgramVariablesErase(string key)
+        {
+            var __basicString0 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString0, key);
+            var __arg0 = __basicString0.__Instance;
+            __Internal.ProgramVariablesErase(__Instance, __arg0);
+            __basicString0.Dispose();
+        }
+
+        public void ProgramVariablesClear()
+        {
+            __Internal.ProgramVariablesClear(__Instance);
+        }
+
+        public string LoopVariablesRunningGet(ulong index)
+        {
+            var ___ret = __Internal.LoopVariablesRunningGet(__Instance, index);
+            var __basicStringRet0 = global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>.__CreateInstance(___ret);
+            return global::Std.BasicStringExtensions.Data(__basicStringRet0);
+        }
+
+        public void LoopVariablesRunningPop(ulong index)
+        {
+            __Internal.LoopVariablesRunningPop(__Instance, index);
+        }
+
+        public void LoopVariablesRunningClear()
+        {
+            __Internal.LoopVariablesRunningClear(__Instance);
+        }
+
+        public string ToggleVariablesRunningGet(ulong index)
+        {
+            var ___ret = __Internal.ToggleVariablesRunningGet(__Instance, index);
+            var __basicStringRet0 = global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>.__CreateInstance(___ret);
+            return global::Std.BasicStringExtensions.Data(__basicStringRet0);
+        }
+
+        public void ToggleVariablesRunningPop(ulong index)
+        {
+            __Internal.ToggleVariablesRunningPop(__Instance, index);
+        }
+
+        public void ToggleVariablesRunningClear()
+        {
+            __Internal.ToggleVariablesRunningClear(__Instance);
+        }
+
+        public global::NikiScript.Command ToggleCommandsRunningGet(ulong index)
+        {
+            var ___ret = __Internal.ToggleCommandsRunningGet(__Instance, index);
+            var __result0 = global::NikiScript.Command.__GetOrCreateInstance(___ret, false);
+            return __result0;
+        }
+
+        public void ToggleCommandsRunningPop(ulong index)
+        {
+            __Internal.ToggleCommandsRunningPop(__Instance, index);
+        }
+
+        public void ToggleCommandsRunningPush(global::NikiScript.Command value)
+        {
+            var __arg0 = value is null ? __IntPtr.Zero : value.__Instance;
+            __Internal.ToggleCommandsRunningPush(__Instance, __arg0);
+        }
+
+        public void ToggleCommandsRunningClear()
+        {
+            __Internal.ToggleCommandsRunningClear(__Instance);
+        }
+
         public global::NikiScript.CommandHandler Commands
         {
             get
@@ -814,7 +1103,7 @@ namespace NikiScript
             }
         }
 
-        /// <summary>How many console variables can be called inside each other</summary>
+        /// <summary>How many console variables can be called inside each other. 0 = unlimited</summary>
         public ushort MaxConsoleVariablesRecursiveDepth
         {
             get
@@ -851,6 +1140,78 @@ namespace NikiScript
                 Marshal.Copy(__bytes0, 0, __bytePtr0, __bytes0.Length);
                 Marshal.WriteByte(__bytePtr0 + __bytes0.Length, 0);
                 ((__Internal*)__Instance)->cfgDirectory = (__IntPtr) __bytePtr0;
+            }
+        }
+
+        public ulong ConsoleVariablesCount
+        {
+            get
+            {
+                var ___ret = __Internal.ConsoleVariablesCount(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong ProgramVariablesCount
+        {
+            get
+            {
+                var ___ret = __Internal.ProgramVariablesCount(__Instance);
+                return ___ret;
+            }
+        }
+
+        public __IntPtr LoopVariablesRunningData
+        {
+            get
+            {
+                var ___ret = __Internal.LoopVariablesRunningData(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong LoopVariablesRunningCount
+        {
+            get
+            {
+                var ___ret = __Internal.LoopVariablesRunningCount(__Instance);
+                return ___ret;
+            }
+        }
+
+        public __IntPtr ToggleVariablesRunningData
+        {
+            get
+            {
+                var ___ret = __Internal.ToggleVariablesRunningData(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong ToggleVariablesRunningCount
+        {
+            get
+            {
+                var ___ret = __Internal.ToggleVariablesRunningCount(__Instance);
+                return ___ret;
+            }
+        }
+
+        public __IntPtr ToggleCommandsRunningData
+        {
+            get
+            {
+                var ___ret = __Internal.ToggleCommandsRunningData(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong ToggleCommandsRunningCount
+        {
+            get
+            {
+                var ___ret = __Internal.ToggleCommandsRunningCount(__Instance);
+                return ___ret;
             }
         }
     }
@@ -1660,6 +2021,27 @@ namespace NikiScript
 
             [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "??1Token@ns@@QEAA@XZ", CallingConvention = __CallingConvention.Cdecl)]
             internal static extern void dtor(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesGetFirst@Token@ns@@QEAA_K_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ReferencesGetFirst(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesGetSecond@Token@ns@@QEAAAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ReferencesGetSecond(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesPop@Token@ns@@QEAAX_K@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ReferencesPop(__IntPtr __instance, ulong index);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesPush@Token@ns@@QEAAX_KAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ReferencesPush(__IntPtr __instance, ulong first, __IntPtr second);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesClear@Token@ns@@QEAAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern void ReferencesClear(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesData@Token@ns@@QEAAPEAXXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern __IntPtr ReferencesData(__IntPtr __instance);
+
+            [SuppressUnmanagedCodeSecurity, DllImport("NikiScript", EntryPoint = "?ReferencesCount@Token@ns@@QEAA_KXZ", CallingConvention = __CallingConvention.Cdecl)]
+            internal static extern ulong ReferencesCount(__IntPtr __instance);
         }
 
         public __IntPtr __Instance { get; protected set; }
@@ -1780,6 +2162,38 @@ namespace NikiScript
             __Instance = IntPtr.Zero;
         }
 
+        public ulong ReferencesGetFirst(ulong index)
+        {
+            var ___ret = __Internal.ReferencesGetFirst(__Instance, index);
+            return ___ret;
+        }
+
+        public string ReferencesGetSecond(ulong index)
+        {
+            var ___ret = __Internal.ReferencesGetSecond(__Instance, index);
+            var __basicStringRet0 = global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>.__CreateInstance(___ret);
+            return global::Std.BasicStringExtensions.Data(__basicStringRet0);
+        }
+
+        public void ReferencesPop(ulong index)
+        {
+            __Internal.ReferencesPop(__Instance, index);
+        }
+
+        public void ReferencesPush(ulong first, string second)
+        {
+            var __basicString1 = new global::Std.BasicString<sbyte, global::Std.CharTraits<sbyte>, global::Std.Allocator<sbyte>>();
+            global::Std.BasicStringExtensions.Assign(__basicString1, second);
+            var __arg1 = __basicString1.__Instance;
+            __Internal.ReferencesPush(__Instance, first, __arg1);
+            __basicString1.Dispose();
+        }
+
+        public void ReferencesClear()
+        {
+            __Internal.ReferencesClear(__Instance);
+        }
+
         public static implicit operator global::NikiScript.Token(global::NikiScript.TokenType type)
         {
             return new global::NikiScript.Token(type);
@@ -1809,6 +2223,24 @@ namespace NikiScript
             set
             {
                 global::Std.BasicStringExtensions.__Internal.Assign(new __IntPtr(&((__Internal*)__Instance)->value), value);
+            }
+        }
+
+        public __IntPtr ReferencesData
+        {
+            get
+            {
+                var ___ret = __Internal.ReferencesData(__Instance);
+                return ___ret;
+            }
+        }
+
+        public ulong ReferencesCount
+        {
+            get
+            {
+                var ___ret = __Internal.ReferencesCount(__Instance);
+                return ___ret;
             }
         }
     }

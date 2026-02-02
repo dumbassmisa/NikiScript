@@ -39,7 +39,10 @@ namespace ns {
 		 * @see ns::registerCommands for code example
 		 */
 		Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs, CommandCallbackFn callback, void* pData, const std::string& description, const std::vector<std::string>& argsDescriptions);
-	
+#ifdef NS_CS_API
+		Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs, CommandCallbackFn callback, void* pData, const std::string& description, const char** argsDescriptions, uint16_t argsDescriptionsCount);
+#endif
+
 		/**
 		 * @brief splitted by space
 		 */

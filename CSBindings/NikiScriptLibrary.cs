@@ -16,7 +16,7 @@ class NikiScriptLibrary : ILibrary
 		module.Headers.AddRange(files);
 
 		// Optional: specify platform/architecture if needed for accurate parsing
-		//driver.ParserOptions.TargetTriple = "x86_64-pc-win32-msvc";
+		// driver.ParserOptions.TargetTriple = "x86_64-pc-win32-msvc";
 		driver.ParserOptions.AddDefines("NS_CS_API");
 	}
 
