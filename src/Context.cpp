@@ -41,8 +41,8 @@ int64_t ns::Arguments::getInt64(size_t index) {
 
 NS_CS_UNORDERED_MAP_IMPLEMENTATION(ConsoleVariables, consoleVariables, const std::string&, std::string&, ns::Context::)
 NS_CS_UNORDERED_MAP_IMPLEMENTATION(ProgramVariables, programVariables, const std::string&, ns::ProgramVariable&, ns::Context::)
-NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(LoopVariablesRunning, loopVariablesRunning, std::string&, const std::string&, ns::Context::);
-NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(ToggleVariablesRunning, toggleVariablesRunning, std::string&, const std::string&, ns::Context::);
+NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(LoopVariablesRunning, loopVariablesRunning, std::string&, ns::Context::);
+NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(ToggleVariablesRunning, toggleVariablesRunning, std::string&, ns::Context::);
 NS_CS_VECTOR_IMPLEMENTATION(ToggleCommandsRunning, toggleCommandsRunning, ns::Command*, ns::Command*, ns::Context::);
 
 std::string& ns::Arguments::getString(size_t index) {
