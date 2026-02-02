@@ -4,6 +4,8 @@
 
 #include "Print.h"
 
+NS_CS_VECTOR_IMPLEMENTATION(ArgsDescriptions, argsDescriptions, std::string&, const std::string&, ns::Command::)
+
 #ifdef NDEBUG
 #define NS_COMMAND_ASSERT(name, expression)
 #else

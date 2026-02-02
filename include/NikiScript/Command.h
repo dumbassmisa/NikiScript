@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "DLL.h"
+#include "CS.h"
 
 namespace ns {
 	struct CommandContext;
@@ -48,5 +49,7 @@ namespace ns {
 		 * @brief prints usage, description and argsDescriptions all like a data tree
 		 */
 		void printAsDataTree();
+
+		NS_CS_VECTOR(ArgsDescriptions, std::string&, const std::string&);
 	};
 }
