@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "DLL.h"
+#include "CS.h"
 
 namespace ns {
 	using TokenFlag = uint8_t;
@@ -23,6 +24,8 @@ namespace ns {
 		Token();
 		Token(TokenType type);
 		Token(TokenType type, const char *value);
+
+		NS_CS_VECTOR_PAIR(References, size_t, size_t, std::string&, const std::string&);
 	};
 
 	struct CommandContext;

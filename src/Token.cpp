@@ -4,6 +4,8 @@
 #include "Context.h"
 #include "Parser.h"
 
+NS_CS_VECTOR_PAIR_IMPLEMENTATION(References, references, size_t, size_t, std::string&, const std::string&, ns::Token::)
+
 ns::Token::Token() {}
 ns::Token::Token(TokenType type) : type(type), value("") {}
 ns::Token::Token(TokenType type, const char *value) : type(type), value(value) {}

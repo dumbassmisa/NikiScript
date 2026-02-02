@@ -55,13 +55,37 @@
 		return variable.size(); \
 	}
 
-#define NS_CS_VECTOR(name, type, pushType) \
-	type name##Get(size_t index); \
+#define NS_CS_VECTOR_PAIR(name, firstType, firstPushType, secondType, secondPushType) \
+	firstType name##GetFirst(size_t index); \
+	secondType name##GetSecond(size_t index); \
 	void name##Pop(size_t index); \
-	void name##Push(pushType value); \
+	void name##Push(firstPushType first, secondPushType second); \
 	void name##Clear(); \
 	void* name##Data(); \
 	size_t name##Count()
+
+#define NS_CS_VECTOR_PAIR_IMPLEMENTATION(name, variable, firstType, firstPushType, secondType, secondPushType, _namespace) \
+	firstType _namespace##name##GetFirst(size_t index) { \
+		return variable[index].first; \
+	} \
+	secondType _namespace##name##GetSecond(size_t index) { \
+		return variable[index].second; \
+	} \
+	void _namespace##name##Pop(size_t index) { \
+		variable.erase(variable.begin()+index); \
+	} \
+	void _namespace##name##Push(firstPushType first, secondPushType second) { \
+		variable.emplace_back(first, second); \
+	} \
+	void _namespace##name##Clear() { \
+		variable.clear(); \
+	} \
+	void* _namespace##name##Data() { \
+		return (void*)variable.data(); \
+	} \
+	size_t _namespace##name##Count() { \
+		return variable.size(); \
+	}
 
 #define NS_CS_VECTOR_NO_PUSH(name, type, pushType) \
 	type name##Get(size_t index); \
@@ -71,7 +95,7 @@
 	size_t name##Count()
 
 // requires NS_CS_VECTOR_NO_PUSH
-#define NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(name, variable, type, pushType, _namespace) \
+#define NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(name, variable, type, _namespace) \
 	type _namespace##name##Get(size_t index) { \
 		return variable[index]->second; \
 	} \
@@ -91,7 +115,9 @@
 #define NS_CS_UNORDERED_MAP(...)
 #define NS_CS_VECTOR_NO_PUSH(...)
 #define NS_CS_VECTOR(...)
+
 #define NS_CS_UNORDERED_MAP_IMPLEMENTATION(...)
 #define NS_CS_VECTOR_IMPLEMENTATION(...)
+#define NS_CS_VECTOR_PAIR_IMPLEMENTATION(...)
 #define NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(...)
 #endif
