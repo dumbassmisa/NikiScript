@@ -11,6 +11,7 @@
 #include "ProgramVariable.h"
 #include "Lexer.h"
 
+#include "CS.h"
 #include "DLL.h"
 
 namespace ns {
@@ -92,6 +93,14 @@ namespace ns {
 
 		uint16_t maxConsoleVariablesRecursiveDepth = 255; ///< How many console variables can be called inside each other. 0 = unlimited
 		const char* cfgDirectory = nullptr; ///< Expects a null terminated char array. Heap allocated is possible but this code doesn't free by itself
+
+#ifdef NS_CS_API
+		NS_CS_UNORDERED_MAP(ConsoleVariables, const std::string&, std::string&);
+		NS_CS_UNORDERED_MAP(ProgramVariables, const std::string&, ns::ProgramVariable&);
+		NS_CS_VECTOR_NO_PUSH(LoopVariablesRunning, std::string&, const std::string&);
+		NS_CS_VECTOR_NO_PUSH(ToggleVariablesRunning, std::string&, const std::string&);
+		NS_CS_VECTOR(ToggleCommandsRunning, ns::Command*, ns::Command*);
+#endif
 	};
 
 	/**

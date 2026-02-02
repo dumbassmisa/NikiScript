@@ -9,7 +9,7 @@ uint8_t ns::Arguments::getByte(size_t index) {
 	return getUnsigned<uint8_t>(index);
 }
 
-uint16_t ns::Arguments::getUIntU16(size_t index) {
+uint16_t ns::Arguments::getUInt16(size_t index) {
 	return getUnsigned<uint16_t>(index);
 }
 
@@ -37,6 +37,15 @@ int32_t ns::Arguments::getInt32(size_t index) {
 int64_t ns::Arguments::getInt64(size_t index) {
 	return getUnsigned<int64_t>(index);
 }
+
+NS_CS_UNORDERED_MAP_IMPLEMENTATION(ConsoleVariables, consoleVariables, const std::string&, std::string&, ns::Context::)
+NS_CS_UNORDERED_MAP_IMPLEMENTATION(ProgramVariables, programVariables, const std::string&, ns::ProgramVariable&, ns::Context::)
+NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(LoopVariablesRunning, loopVariablesRunning, std::string&, const std::string&, ns::Context::);
+NS_CS_VECTOR_POINTER_PAIR_IMPLEMENTATION(ToggleVariablesRunning, toggleVariablesRunning, std::string&, const std::string&, ns::Context::);
+NS_CS_VECTOR_IMPLEMENTATION(ToggleCommandsRunning, toggleCommandsRunning, ns::Command*, ns::Command*, ns::Context::);
+// NS_CS_UNORDERED_MAP_IMPLEMENTATION(ProgramVariables, programVariables, const std::string&, std::string&);
+// NS_CS_UNORDERED_MAP_IMPLEMENTATION(LoopVariablesRunning, loopVariablesRunning, const std::string&, std::string&, ns::Context::);
+// NS_CS_UNORDERED_MAP_IMPLEMENTATION(ToggleVariablesRunning, toggleVariablesRunning, const std::string&, std::string&, ns::Context::);
 #endif
 
 std::string& ns::Arguments::getString(size_t index) {
