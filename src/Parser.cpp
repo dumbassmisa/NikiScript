@@ -62,15 +62,15 @@ bool ns::canRunVariable(CommandContext* pCtx) {
 	}
 }
 
-void ns::handleCommandCall(CommandContext* pCtx, ProgramVariable*& pProgramVar) {
-	if (pProgramVar != nullptr) {
+void ns::handleCommandCall(CommandContext* pCtx) {
+	if (pCtx->pProgramVar != nullptr) {
 		if (pCtx->args.arguments.size() == 0)
-			ns::printf(ns::ECHO, "Value: {}\n{}\n", pProgramVar->get(pCtx, pProgramVar), pProgramVar->description);
+			ns::printf(ns::ECHO, "Value: {}\n{}\n", pCtx->pProgramVar->get(pCtx, pCtx->pProgramVar), pCtx->pProgramVar->description);
 		else
-			pProgramVar->set(pCtx, pProgramVar, pCtx->args.arguments[0]);
+			pCtx->pProgramVar->set(pCtx, pCtx->pProgramVar, pCtx->args.arguments[0]);
 
 		clearStatementData(pCtx);
-		pProgramVar = nullptr;
+		pCtx->pProgramVar = nullptr;
 		return;
 	}
 
@@ -125,7 +125,7 @@ void ns::handleCommandCall(CommandContext* pCtx, ProgramVariable*& pProgramVar) 
 	clearStatementData(pCtx);
 }
 
-ns::TokenFlag ns::handleIdentifierToken(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError) {
+ns::TokenFlag ns::handleIdentifierToken(CommandContext* pCtx, bool printError) {
 	if (pCtx->lexer.token.value.empty()) {
 		pCtx->lexer.advanceUntil(static_cast<TokenFlag>(TokenType::EOS));
 		return 1;
@@ -139,7 +139,7 @@ ns::TokenFlag ns::handleIdentifierToken(CommandContext* pCtx, ProgramVariable*& 
 		return 0;
 
 	} else if (pCtx->pCtx->programVariables.count(pCtx->lexer.token.value) != 0) {
-		pProgramVar = &pCtx->pCtx->programVariables[pCtx->lexer.token.value];
+		pCtx->pProgramVar = &pCtx->pCtx->programVariables[pCtx->lexer.token.value];
 		return 1;
 
 	} else {
@@ -230,7 +230,7 @@ void ns::handleArgumentToken(CommandContext* pCtx, bool printError) {
 	pCtx->args.arguments.push_back(pCtx->lexer.token.value);
 }
 
-void ns::handleConsoleVariableCall(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError) {
+void ns::handleConsoleVariableCall(CommandContext* pCtx, bool printError) {
 	std::vector<CommandContext*> tempContexts;
 	tempContexts.push_back(new CommandContext(pCtx->pCtx, pCtx->pCtx->consoleVariables[pCtx->lexer.token.value]));
 
@@ -245,7 +245,7 @@ void ns::handleConsoleVariableCall(CommandContext* pCtx, ProgramVariable*& pProg
 	while (tempContexts.size() != 0) {
 		switch (pCtx->lexer.token.type) {
 		case TokenType::IDENTIFIER:
-			if (handleIdentifierToken(pCtx, pProgramVar, printError) == 2) {
+			if (handleIdentifierToken(pCtx, printError) == 2) {
 				if (pCtx->pCtx->maxConsoleVariablesRecursiveDepth != 0 && tempContexts.size() >= pCtx->pCtx->maxConsoleVariablesRecursiveDepth) {
 					pCtx->lexer.advanceUntil(static_cast<TokenFlag>(TokenType::EOS));
 					break;
@@ -258,7 +258,7 @@ void ns::handleConsoleVariableCall(CommandContext* pCtx, ProgramVariable*& pProg
 			break;
 
 		case TokenType::EOS:
-			handleCommandCall(pCtx, pProgramVar);
+			handleCommandCall(pCtx);
 			break;
 
 		case TokenType::ARGUMENT:
@@ -271,7 +271,7 @@ void ns::handleConsoleVariableCall(CommandContext* pCtx, ProgramVariable*& pProg
 
 		pCtx->lexer.advance();
 		while (pCtx->lexer.token.type == TokenType::END) {
-			handleCommandCall(pCtx, pProgramVar);
+			handleCommandCall(pCtx);
 
 			delete pCtx;
 			tempContexts.pop_back();
@@ -296,15 +296,13 @@ void ns::updateLoopVariables(Context* pCtx) {
 }
 
 void ns::parse(CommandContext* pCtx, bool printError) {
-	ProgramVariable* pProgramVar = nullptr;
-
 	pCtx->lexer.advance();
 	while (pCtx->lexer.token.type != TokenType::END) {
 		switch (pCtx->lexer.token.type) {
 		case TokenType::IDENTIFIER: { // can be either variable or command
-			TokenFlag result = handleIdentifierToken(pCtx, pProgramVar, printError);
+			TokenFlag result = handleIdentifierToken(pCtx, printError);
 			if (result == 2) {
-				handleConsoleVariableCall(pCtx, pProgramVar, printError);
+				handleConsoleVariableCall(pCtx, printError);
 				pCtx->lexer.advanceUntil(static_cast<TokenFlag>(TokenType::EOS));
 			} else if (result == 1)
 				pCtx->lexer.advance();
@@ -317,7 +315,7 @@ void ns::parse(CommandContext* pCtx, bool printError) {
 			break;
 
 		case TokenType::EOS:
-			handleCommandCall(pCtx, pProgramVar);
+			handleCommandCall(pCtx);
 			pCtx->lexer.advance();
 			break;
 
@@ -327,16 +325,16 @@ void ns::parse(CommandContext* pCtx, bool printError) {
 		}
 	}
 
-	handleCommandCall(pCtx, pProgramVar);
+	handleCommandCall(pCtx);
 }
 
-void ns::parseUntilEOS(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError) {
+void ns::parseUntilEOS(CommandContext* pCtx, bool printError) {
 	while ((pCtx->lexer.token.type & (TokenType::EOS|TokenType::END)) == 0) {
 		switch (pCtx->lexer.token.type) {
 		case TokenType::IDENTIFIER: { // can be either variable or command
-			TokenFlag result = handleIdentifierToken(pCtx, pProgramVar, printError);
+			TokenFlag result = handleIdentifierToken(pCtx, printError);
 			if (result == 2) {
-				handleConsoleVariableCall(pCtx, pProgramVar, printError);
+				handleConsoleVariableCall(pCtx, printError);
 				pCtx->lexer.advanceUntil(static_cast<TokenFlag>(TokenType::EOS));
 			} else if (result == 1)
 				pCtx->lexer.advance();
@@ -354,7 +352,7 @@ void ns::parseUntilEOS(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool
 		}
 	}
 
-	handleCommandCall(pCtx, pProgramVar);
+	handleCommandCall(pCtx);
 	pCtx->lexer.advance();
 }
 

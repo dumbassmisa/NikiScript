@@ -13,10 +13,6 @@
 #include <NikiScript/NikiScript.h>
 #include <NikiScript/Parser.h>
 
-struct Job {
-	ns::CommandContext ctx;
-	ns::ProgramVariable* pProgramVar = nullptr;
-};
 
 const char* printLevelToCStr(ns::PrintLevel level) {
 	switch (level) {
@@ -66,7 +62,7 @@ int main() {
 	nsRegisterCommand(&ctx, "quit", 0,1, quit_command, "stops the main loop from running", "s[?]", "");
 	nsRegisterCommand(&ctx, "wait", 0,1, wait_command, "wait n cycles before continuing the execution", "i[cycles?]", "how many cycles to wait");
 
-	std::vector<Job*> jobs{};
+	std::vector<ns::CommandContext*> jobs{};
 	std::string input;
 	
 	running = true;
@@ -77,27 +73,27 @@ int main() {
 		std::getline(std::cin, input);
 
 		{
-			Job* pJob = new Job();
+			ns::CommandContext* pJob = new ns::CommandContext();
 			jobs.push_back(pJob);
-			pJob->ctx.lexer.input = input;
-			pJob->ctx.pCtx = &ctx;
-			pJob->ctx.lexer.advance();
+			pJob->lexer.input = input;
+			pJob->pCtx = &ctx;
+			pJob->lexer.advance();
 		}
 
 		for (size_t i = 0; i < jobs.size();) {
-			if (jobs[i]->ctx.lexer.token.type == ns::TokenType::END) {
+			if (jobs[i]->lexer.token.type == ns::TokenType::END) {
 				delete jobs[i];
 				jobs.erase(jobs.begin()+i);
 				continue;
 			}
 
-			while (waitAmounts.count(&jobs[i]->ctx) == 0 && jobs[i]->ctx.lexer.token.type != ns::TokenType::END)
-				ns::parseUntilEOS(&jobs[i]->ctx, jobs[i]->pProgramVar);
+			while (waitAmounts.count(jobs[i]) == 0 && jobs[i]->lexer.token.type != ns::TokenType::END)
+				ns::parseUntilEOS(jobs[i]);
 
-			if (waitAmounts.count(&jobs[i]->ctx) != 0) {
-				--waitAmounts[&jobs[i]->ctx];
-				if (waitAmounts[&jobs[i]->ctx] == 0)
-					waitAmounts.erase(&jobs[i]->ctx);
+			if (waitAmounts.count(jobs[i]) != 0) {
+				--waitAmounts[jobs[i]];
+				if (waitAmounts[jobs[i]] == 0)
+					waitAmounts.erase(jobs[i]);
 			}
 
 			++i;

@@ -12,7 +12,7 @@
 #include "Lexer.h"
 
 #include "CS.h"
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	using Origin = uint16_t;
@@ -112,6 +112,7 @@ namespace ns {
 
 		Context* pCtx = nullptr; ///< A general context which contains data which commands won't need unless for special cases.
 		Command* pCommand = nullptr;
+		ProgramVariable* pProgramVar = nullptr; ///< Used when instead of the identifier token being a command, it returned a program variable.
 		Lexer lexer{};
 
 		Arguments args{};
