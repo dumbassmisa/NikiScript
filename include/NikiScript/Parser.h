@@ -19,7 +19,7 @@
 #define NS_FILE_EXTENSION ".cfg"
 #endif
 
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	/**
@@ -47,7 +47,7 @@ namespace ns {
 	 * @param pProgramVar if not null: sets/gets program variable
 	 * @see ns::parse
 	 */
-	NS_API void handleCommandCall(CommandContext* pCtx, ProgramVariable*& pProgramVar);
+	NS_API void handleCommandCall(CommandContext* pCtx);
 
 	/**
 	 * @brief Called in parse function when IDENTIFIER token is passed
@@ -58,7 +58,7 @@ namespace ns {
 	 * @see ns::parse
 	 * @see ns::canRunVariable
 	 */
-	NS_API TokenFlag handleIdentifierToken(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError);
+	NS_API TokenFlag handleIdentifierToken(CommandContext* pCtx, bool printError);
 
 	/**
 	 * @brief Handles references in the string and checks if the parameter matches the argument type
@@ -74,7 +74,7 @@ namespace ns {
 	 * @param pCtx
 	 * @param pProgramVar
 	 */
-	NS_API void handleConsoleVariableCall(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError);
+	NS_API void handleConsoleVariableCall(CommandContext* pCtx, bool printError);
 
 	/**
 	 * @brief if a loop variable is active, its script is ran here
@@ -87,6 +87,6 @@ namespace ns {
 	 * @param pCtx
 	 */
 	NS_API void parse(CommandContext* pCtx, bool printError=true);
-	NS_API void parseUntilEOS(CommandContext* pCtx, ProgramVariable*& pProgramVar, bool printError=true);
+	NS_API void parseUntilEOS(CommandContext* pCtx, bool printError=true);
 	NS_API bool parseFile(CommandContext* pCtx, const char* path, bool printError=true);
 }

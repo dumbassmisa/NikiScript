@@ -4,7 +4,7 @@
 #include <string>
 #include <stdint.h>
 
-#include "DLL.h"
+#include "API.h"
 #include "CS.h"
 
 namespace ns {

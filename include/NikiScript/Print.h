@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string>
 
-#include "DLL.h"
+#include "API.h"
 #include "Utils.h"
 
 namespace ns {

@@ -5,7 +5,7 @@
 
 #include "Command.h"
 
-#include "DLL.h"
+#include "API.h"
 
 #define nsRegisterCommand(pCtx, name, minArgs, maxArgs, callback, description, ...) \
 	(pCtx)->commands.add(ns::Command(name, minArgs, maxArgs, callback, nullptr, description, {__VA_ARGS__}))

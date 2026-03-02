@@ -49,7 +49,7 @@
 #define NS_ARGUMENTS_QUOTE '"'
 #endif
 
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	struct NS_API Lexer {

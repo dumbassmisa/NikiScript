@@ -5,7 +5,7 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	struct ProgramVariable;

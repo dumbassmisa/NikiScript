@@ -4,7 +4,7 @@
 
 #include "Context.h"
 
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	NS_API void help(CommandContext* pCtx, const std::string& name);

@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-#include "DLL.h"
+#include "API.h"
 
 namespace ns {
 	/**
