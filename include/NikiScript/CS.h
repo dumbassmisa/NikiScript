@@ -114,6 +114,7 @@
 #else
 #define NS_CS_UNORDERED_MAP(...)
 #define NS_CS_VECTOR_NO_PUSH(...)
+#define NS_CS_VECTOR_PAIR(...)
 #define NS_CS_VECTOR(...)
 
 #define NS_CS_UNORDERED_MAP_IMPLEMENTATION(...)

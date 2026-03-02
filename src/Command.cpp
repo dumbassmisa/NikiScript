@@ -44,6 +44,7 @@ ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
 #endif
 }
 
+#ifdef NS_CS_API
 ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
  CommandCallbackFn callback, void* pData, const std::string& description,
  const char** pArgsDescriptions, uint16_t argsDescriptionsCount) {
@@ -56,6 +57,7 @@ ns::Command::Command(const std::string& name, uint8_t minArgs, uint8_t maxArgs,
 
 	*this = Command(name, minArgs, maxArgs, callback, pData, description, argsDescriptions);
 }
+#endif
 
 std::string ns::Command::getArgumentsNames() {
 	if (argsDescriptions.size() == 0)
