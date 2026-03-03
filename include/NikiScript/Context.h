@@ -91,7 +91,7 @@ namespace ns {
 		ToggleVariablesRunning toggleVariablesRunning{};
 		ToggleCommandsRunning toggleCommandsRunning{};
 
-		uint16_t maxConsoleVariablesRecursiveDepth = 255; ///< How many console variables can be called inside each other. 0 = unlimited
+		uint16_t maxConsoleVariablesRecursiveDepth = 10; ///< How many console variables can be called inside each other. 0 = unlimited
 		const char* cfgDirectory = nullptr; ///< Expects a null terminated char array. Heap allocated is possible but this code doesn't free by itself
 
 		NS_CS_UNORDERED_MAP(ConsoleVariables, const std::string&, std::string&);
